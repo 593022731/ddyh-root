@@ -16,14 +16,13 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>3.7</version>
-           <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
             <version>4.5.8</version>
-            <scope>provided</scope>
+            <!-- <scope>provided</scope>-->
         </dependency>
 
 
@@ -32,7 +31,6 @@
             <groupId>net.sf.dozer</groupId>
             <artifactId>dozer</artifactId>
             <version>5.5.1</version>
-            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>
