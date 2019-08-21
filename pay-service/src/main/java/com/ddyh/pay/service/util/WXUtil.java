@@ -1,6 +1,6 @@
 package com.ddyh.pay.service.util;
 
-import com.ddyh.commons.utils.MD5Utils;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -36,7 +36,8 @@ public class WXUtil {
             }
         });
         sb.append("key=" + key);
-        String sign = MD5Utils.GetMD5Code(sb.toString()).toUpperCase();
+        System.out.println("signstr="+sb);
+        String sign = DigestUtils.md5Hex(sb.toString()).toUpperCase();
         return sign;
     }
 
