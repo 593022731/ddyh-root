@@ -12,8 +12,6 @@ public class WXPaymentContext extends PaymentContext{
     private String spbillCreateIp;
     /** 拼接的xml格式数据，用于微信统一下单的参数 */
     private String xml;
-    /** 签名 */
-    private String sign;
     /** 微信openID(微信h5支付必填) */
     private String openId;
     /** 交易类型 */
@@ -43,14 +41,6 @@ public class WXPaymentContext extends PaymentContext{
 
     public void setXml(String xml) {
         this.xml = xml;
-    }
-
-    public String getSign() {
-        return sign;
-    }
-
-    public void setSign(String sign) {
-        this.sign = sign;
     }
 
     public String getOpenId() {

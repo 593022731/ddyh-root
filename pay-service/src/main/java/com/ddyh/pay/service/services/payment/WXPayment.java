@@ -78,15 +78,17 @@ public class WXPayment extends BasePayCoreService {
 
     @Override
     public void prepare(PaymentContext context) {
-        SortedMap paraMap = new TreeMap<String, Object>();
         WXPaymentContext wxPaymentContext = (WXPaymentContext) context;
+
+        SortedMap paraMap = new TreeMap<String, Object>();
+        paraMap.put("appid", appId);
+        paraMap.put("mch_id", mchId);
         paraMap.put("body", "东东优汇产品");
         paraMap.put("out_trade_no", wxPaymentContext.getOutTradeNo());
         //单位分
         paraMap.put("total_fee", wxPaymentContext.getTotalFee());
         paraMap.put("spbill_create_ip", wxPaymentContext.getSpbillCreateIp());
-        paraMap.put("appid", appId);
-        paraMap.put("mch_id", mchId);
+
         if(StringUtils.isNotBlank(wxPaymentContext.getOpenId())){
             //微信h5支付必填
             paraMap.put("openid", wxPaymentContext.getOpenId());
@@ -98,10 +100,9 @@ public class WXPayment extends BasePayCoreService {
         paraMap.put("notify_url", notifyUrl);
         String sign = WXUtil.createSign(paraMap, mchKey);
         paraMap.put("sign", sign);
-        log.info("wxsign:{}", JSON.toJSONString(paraMap));
+        log.info("wxpreparesign:{}", JSON.toJSONString(paraMap));
         String xml = WXUtil.getRequestXml(paraMap);
         wxPaymentContext.setXml(xml);
-        wxPaymentContext.setSign(sign);
     }
 
     @Override
@@ -116,11 +117,29 @@ public class WXPayment extends BasePayCoreService {
             String nonceStr = CommonUtil.getUUID();
             Long currentMills = System.currentTimeMillis();
             String timeStamp = currentMills.toString().substring(0, 10);
-            if(wxPaymentContext.getTradeType().equals("JSAPI")){
-                //H5支付，返回值改成
-                prepayId ="prepay_id=" + prepayId;
-            }
-            WXPayDTO dto = new WXPayDTO(appId, mchId, prepayId, wxPaymentContext.getSignType(), nonceStr, timeStamp, wxPaymentContext.getSign());
+//            if(wxPaymentContext.getTradeType().equals("JSAPI")){
+//                //H5支付，返回值改成
+//                prepayId ="prepay_id=" + prepayId;
+//            }
+
+            SortedMap paraMap = new TreeMap<String, Object>();
+            paraMap.put("appid", appId);
+            paraMap.put("partnerid", mchId);
+            paraMap.put("package", prepayId);
+            //单位分
+            paraMap.put("signType", wxPaymentContext.getSignType());
+            paraMap.put("noncestr", nonceStr);
+
+//            if(StringUtils.isNotBlank(wxPaymentContext.getOpenId())){
+//                //微信h5支付必填
+//                paraMap.put("openid", wxPaymentContext.getOpenId());
+//            }
+
+            paraMap.put("timestamp",timeStamp);
+            String sign = WXUtil.createSign(paraMap, mchKey);
+            log.info("wxprocesssign:{}", JSON.toJSONString(paraMap));
+
+            WXPayDTO dto = new WXPayDTO(appId, mchId, prepayId, wxPaymentContext.getSignType(), nonceStr, timeStamp, sign);
             return new Result(dto);
         }
         String errMsg = resultMap.get("err_code") + ":" + resultMap.get("err_code_des");
