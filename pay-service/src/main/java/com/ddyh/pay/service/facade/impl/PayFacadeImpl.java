@@ -1,11 +1,11 @@
 package com.ddyh.pay.service.facade.impl;
 
+import com.alibaba.dubbo.config.annotation.Service;
 import com.ddyh.commons.result.Result;
 import com.ddyh.pay.facade.facade.PayFacade;
 import com.ddyh.pay.facade.param.CallBackParam;
 import com.ddyh.pay.facade.param.RequestParam;
 import com.ddyh.pay.service.services.core.BasePayCoreService;
-import org.springframework.stereotype.Service;
 
 /**
  * @author: weihui

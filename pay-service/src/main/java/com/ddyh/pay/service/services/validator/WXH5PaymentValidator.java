@@ -8,12 +8,12 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 @Service("wxH5PaymentValidator")
-public class WXH5PaymentValidator extends WXPaymentValidator {
+public class WXH5PaymentValidator extends BaseValidator {
 
     @Override
     public void specialValidate(PaymentContext context) {
         WXPaymentContext wxContext = (WXPaymentContext)context;
-        if (!wxContext.getPayChannel().equals(PayChannelEnum.WECHAT_H5_PAY.getCode())) {
+        if (!wxContext.getPayChannel().equals(PayChannelEnum.WX_H5_PAY.getCode())) {
             throw new BusinessException("支付渠道参数异常");
         }
         if(wxContext.getTotalFee() == null){

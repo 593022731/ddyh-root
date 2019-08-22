@@ -7,13 +7,13 @@ import com.ddyh.pay.service.services.context.WXPaymentContext;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
-@Service("wxPaymentValidator")
-public class WXPaymentValidator extends BaseValidator {
+@Service("wxAppPaymentValidator")
+public class WXAppPaymentValidator extends BaseValidator {
 
     @Override
     public void specialValidate(PaymentContext context) {
         WXPaymentContext wxContext = (WXPaymentContext)context;
-        if (!wxContext.getPayChannel().equals(PayChannelEnum.WECHAT_PAY.getCode())) {
+        if (!wxContext.getPayChannel().equals(PayChannelEnum.WX_APP_PAY.getCode())) {
             throw new BusinessException("支付渠道参数异常");
         }
         if(wxContext.getTotalFee() == null){

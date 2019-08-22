@@ -11,6 +11,8 @@ public enum ResultCode {
 
     FAIL(2, "失败"),
 
+    REPEAT_COMMIT(3, "重复提交"),
+
     PARAM_ERROR(1000, "参数错误"),
 
     USER_UNLOGIN(1010, "用户未登陆"),

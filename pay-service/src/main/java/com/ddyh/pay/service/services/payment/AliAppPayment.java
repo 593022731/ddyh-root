@@ -12,19 +12,25 @@ import com.alipay.api.response.AlipayTradeAppPayResponse;
 import com.ddyh.commons.exception.BusinessException;
 import com.ddyh.commons.result.Result;
 import com.ddyh.commons.utils.ResultUtil;
+import com.ddyh.pay.dao.model.TradeLog;
 import com.ddyh.pay.facade.constant.PayChannelEnum;
+import com.ddyh.pay.facade.constant.TradeStatusEnum;
+import com.ddyh.pay.facade.constant.TradeTypeEnum;
 import com.ddyh.pay.facade.param.AliPayParam;
 import com.ddyh.pay.facade.param.CallBackParam;
 import com.ddyh.pay.facade.param.RequestParam;
+import com.ddyh.pay.service.services.TradeLogService;
 import com.ddyh.pay.service.services.context.AliPaymentContext;
 import com.ddyh.pay.service.services.context.PaymentContext;
 import com.ddyh.pay.service.services.core.BasePayCoreService;
 import com.ddyh.pay.service.services.validator.AliPaymentValidator;
 import com.ddyh.pay.service.services.validator.Validator;
+import org.apache.commons.lang3.time.DateFormatUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -35,8 +41,8 @@ import java.util.Map;
  * @author: weihui
  * @Date: 2019/8/19 16:17
  */
-@Service
-public class AliPayment extends BasePayCoreService {
+@Service("aliAppPayment")
+public class AliAppPayment extends BasePayCoreService {
 
     private static final String DEFAULT_CHARSET = "UTF-8";
     private static final String DEFAULT_SIGN_TYPE = "RSA2";
@@ -70,6 +76,9 @@ public class AliPayment extends BasePayCoreService {
 
     @Resource
     private AliPaymentValidator aliPaymentValidator;
+
+    @Resource
+    private TradeLogService tradeLogService;
 
     @Override
     public PaymentContext createContext(RequestParam param) {
@@ -135,6 +144,7 @@ public class AliPayment extends BasePayCoreService {
             //valueStr = new String(valueStr.getBytes("ISO-8859-1"), "utf-8");
             params.put(name, valueStr);
         }
+        log.info("alipaycallbackresult={}", JSON.toJSONString(params));
 
         //验签
         if (!verify(params)) {
@@ -142,7 +152,12 @@ public class AliPayment extends BasePayCoreService {
         }
 
         String orderNum = params.get("out_trade_no");
-        //TODO 订单已完成，直接return
+        //已回调，直接return
+        TradeLog tradeLog = tradeLogService.get(orderNum);
+        if(!tradeLog.getTradeStatus().equals(TradeStatusEnum.COMMIT.getCode())){
+            throw new BusinessException("重复提交");
+        }
+
         //TODO 直接调用订单系统，会处理订单已完成，直接return，根据订单类型自动处理不同类型的订单回调
 
         //TRADE_FINISH(支付完成)、TRADE_SUCCESS(支付成功)、FAIL(支付失败)
@@ -150,14 +165,14 @@ public class AliPayment extends BasePayCoreService {
 
         log.info("alipaycallback={},{}", orderNum, tradeStatus);
         if ("TRADE_SUCCESS".equals(tradeStatus)) {
-            //TODO 更新交易日志表，交易成功
-
+            //更新交易日志表，交易成功
+            tradeLogService.update(orderNum, params.get("trade_no"), params.get("gmt_payment"), TradeStatusEnum.FINISH, "");
             //TODO 更新订单表状态已付款
         } else if ("TRADE_FINISH".equals(tradeStatus)) {
             //TODO 更新订单表状态已付款
         } else if ("FAIL".equals(tradeStatus)) {
-            //TODO 更新交易日志表，交易失败
-
+            // 更新交易日志表，交易失败TODO 失败原因字段？
+            tradeLogService.update(orderNum, params.get("trade_no"), DateFormatUtils.format(System.currentTimeMillis(), "yyyy-MM-dd HH:mm:ss"), TradeStatusEnum.FAIL, "");
         } else {
             return ResultUtil.error("fail");
         }
@@ -167,7 +182,7 @@ public class AliPayment extends BasePayCoreService {
 
     @Override
     public String getPayChannel() {
-        return PayChannelEnum.ALI_PAY.getCode();
+        return PayChannelEnum.ALI_APP_PAY.getCode();
     }
 
     @Override
@@ -177,15 +192,20 @@ public class AliPayment extends BasePayCoreService {
 
     @Override
     public void afterProcess(PaymentContext context, Result result) {
-        //TODO 生成交易日志表，交易中
+        //生成交易日志表，交易中
+        AliPaymentContext aliPaymentContext = (AliPaymentContext) context;
+        String tradeNo = aliPaymentContext.getOutTradeNo();
+        BigDecimal totalFee = aliPaymentContext.getTotalFee();
+        tradeLogService.save(tradeNo, totalFee, PayChannelEnum.ALI_APP_PAY, TradeTypeEnum.PAY);
     }
 
     /**
      * 支付宝验签
+     *
      * @param params
      * @return
      */
-    private boolean verify( Map<String, String> params) {
+    private boolean verify(Map<String, String> params) {
         try {
             //切记alipaypublickey是支付宝的公钥，请去open.alipay.com对应应用下查看。
             //boolean AlipaySignature.rsaCheckV1(Map<String, String> params, String publicKey, String charset, String sign_type)

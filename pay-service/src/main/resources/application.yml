@@ -1,0 +1,22 @@
+app:
+    id: dd-pay
+apollo:
+    bootstrap:
+            enabled: true
+            namespaces: jdbc,dubbo,application
+
+mybatis:
+    mapper-locations: classpath*:mapping/*Mapper.xml
+
+#pagehelper分页插件
+pagehelper:
+    helperDialect: mysql
+    reasonable: true
+    supportMethodsArguments: true
+    params: count=countSql
+
+logging:
+    pattern:
+        console: "%date %level [%thread] %logger{36} [%file : %line] %msg %X{key} %n"
+    level:
+        root: debug

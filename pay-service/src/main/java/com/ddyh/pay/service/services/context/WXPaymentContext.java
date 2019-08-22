@@ -1,6 +1,7 @@
 package com.ddyh.pay.service.services.context;
 
 /**
+ * 微信上下文对象
  * @author: weihui
  * @Date: 2019/8/19 16:27
  */

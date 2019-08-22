@@ -7,13 +7,13 @@ import com.ddyh.pay.service.services.context.PaymentContext;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
-@Service("aliPaymentValidator")
+@Service
 public class AliPaymentValidator extends BaseValidator {
 
     @Override
     public void specialValidate(PaymentContext context) {
         AliPaymentContext aliContext = (AliPaymentContext)context;
-        if (!aliContext.getPayChannel().equals(PayChannelEnum.ALI_PAY.getCode())) {
+        if (!aliContext.getPayChannel().equals(PayChannelEnum.ALI_APP_PAY.getCode())) {
             throw new BusinessException("支付渠道参数异常");
         }
         if(aliContext.getTotalFee() == null){

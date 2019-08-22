@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ddyh.pay.dao.mapper.TradeLogMapper">
+  <resultMap id="BaseResultMap" type="com.ddyh.pay.dao.model.TradeLog">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="trade_no" jdbcType="VARCHAR" property="tradeNo" />
+    <result column="out_trade_no" jdbcType="VARCHAR" property="outTradeNo" />
+    <result column="trade_amount" jdbcType="DECIMAL" property="tradeAmount" />
+    <result column="trade_channel" jdbcType="VARCHAR" property="tradeChannel" />
+    <result column="trade_type" jdbcType="INTEGER" property="tradeType" />
+    <result column="trade_status" jdbcType="SMALLINT" property="tradeStatus" />
+    <result column="trade_success_time" jdbcType="TIMESTAMP" property="tradeSuccessTime" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, trade_no, out_trade_no, trade_amount, trade_channel, trade_type, trade_status, 
+    trade_success_time, remark
+  </sql>
+  <insert id="insert" parameterType="com.ddyh.pay.dao.model.TradeLog">
+    insert into t_trade_log (trade_no, out_trade_no,
+      trade_amount, trade_channel, trade_type, 
+      trade_status, trade_success_time, remark)
+    values (#{tradeNo,jdbcType=VARCHAR}, #{outTradeNo,jdbcType=VARCHAR},
+      #{tradeAmount,jdbcType=DECIMAL}, #{tradeChannel,jdbcType=VARCHAR}, #{tradeType,jdbcType=INTEGER},
+      #{tradeStatus,jdbcType=SMALLINT}, #{tradeSuccessTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}
+  </insert>
+  <update id="update" parameterType="com.ddyh.pay.dao.model.TradeLog">
+    update t_trade_log
+    set
+      out_trade_no = #{outTradeNo,jdbcType=VARCHAR},
+      trade_status = #{tradeStatus,jdbcType=SMALLINT},
+      trade_success_time = #{tradeSuccessTime,jdbcType=TIMESTAMP},
+      remark = #{remark,jdbcType=VARCHAR}
+    where trade_no = #{tradeNo}
+  </update>
+
+  <select id="get" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_trade_log
+    where trade_no = #{tradeNo}
+  </select>
+</mapper>

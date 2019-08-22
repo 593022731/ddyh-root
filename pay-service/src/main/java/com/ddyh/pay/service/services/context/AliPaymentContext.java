@@ -5,6 +5,7 @@ import com.alipay.api.request.AlipayTradeAppPayRequest;
 import java.math.BigDecimal;
 
 /**
+ * 支付宝上下文对象
  * @author: weihui
  * @Date: 2019/8/19 16:27
  */

@@ -7,6 +7,7 @@ import com.ddyh.commons.utils.CommonUtil;
 import com.ddyh.commons.utils.HttpClientUtil;
 import com.ddyh.commons.utils.ResultUtil;
 import com.ddyh.pay.facade.constant.PayChannelEnum;
+import com.ddyh.pay.facade.constant.TradeTypeEnum;
 import com.ddyh.pay.facade.dto.WXH5PayDTO;
 import com.ddyh.pay.facade.param.CallBackParam;
 import com.ddyh.pay.facade.param.RequestParam;
@@ -20,6 +21,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
@@ -30,8 +32,8 @@ import java.util.TreeMap;
  * @author: weihui
  * @Date: 2019/8/19 16:17
  */
-@Service
-public class WXH5Payment extends WXPayment {
+@Service("wxH5Payment")
+public class WXH5Payment extends WXAppPayment {
 
     /**
      * 应用id
@@ -55,7 +57,7 @@ public class WXH5Payment extends WXPayment {
     @Value("${wx.h5.pay.notifyUrl}")
     private String notifyUrl;
 
-    @Resource
+    @Resource(type = WXH5PaymentValidator.class)
     private WXH5PaymentValidator wxH5PaymentValidator;
 
     @Override
@@ -75,7 +77,7 @@ public class WXH5Payment extends WXPayment {
 
         String nonce_str = CommonUtil.getUUID().substring(0, 16);
         paraMap.put("nonce_str", nonce_str);
-        paraMap.put("trade_type",wxPaymentContext.getTradeType());
+        paraMap.put("trade_type", wxPaymentContext.getTradeType());
         paraMap.put("notify_url", notifyUrl);
         //调用统一下单前的签名，字段名看文档：https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_1
         String sign = WXUtil.createSign(paraMap, mchKey);
@@ -107,7 +109,7 @@ public class WXH5Payment extends WXPayment {
             paraMap.put("signType", wxPaymentContext.getSignType());
             paraMap.put("nonceStr", nonceStr);
 
-            paraMap.put("timeStamp",timeStamp);
+            paraMap.put("timeStamp", timeStamp);
             //调用微信唤起的时候，要重新签名，注意和统一下单的参数名完全不一样，字段名看文档：https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=7_7&index=6
             String sign = WXUtil.createSign(paraMap, mchKey);
             log.info("wxh5processsign:{}", JSON.toJSONString(paraMap));
@@ -139,7 +141,7 @@ public class WXH5Payment extends WXPayment {
 
     @Override
     public String getPayChannel() {
-        return PayChannelEnum.WECHAT_H5_PAY.getCode();
+        return PayChannelEnum.WX_H5_PAY.getCode();
     }
 
     @Override
@@ -149,7 +151,11 @@ public class WXH5Payment extends WXPayment {
 
     @Override
     public void afterProcess(PaymentContext context, Result result) {
-        //TODO 生成交易日志表，交易中
+        //生成交易日志表，交易中
+        WXPaymentContext paymentContext = (WXPaymentContext) context;
+        String tradeNo = paymentContext.getOutTradeNo();
+        BigDecimal totalFee = new BigDecimal(paymentContext.getTotalFee()).movePointLeft(2);
+        tradeLogService.save(tradeNo, totalFee, PayChannelEnum.WX_H5_PAY, TradeTypeEnum.PAY);
     }
 
 }

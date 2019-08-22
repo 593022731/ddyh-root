@@ -12,6 +12,7 @@
         <module>pay-facade</module>
         <module>dd-commons</module>
         <module>pay-service</module>
+        <module>pay-dao</module>
     </modules>
 
     <properties>
