@@ -119,7 +119,7 @@ public class AliPayment extends BasePayCoreService {
 
     @Override
     public Result callback(CallBackParam param) {
-        Map<String, String[]> requestParams = param.getResultMap();
+        Map<String, String[]> requestParams = param.getAliParam();
 
         //获取支付宝POST过来反馈信息
         Map<String, String> params = new HashMap();
@@ -161,7 +161,8 @@ public class AliPayment extends BasePayCoreService {
         } else {
             return ResultUtil.error("fail");
         }
-        return new Result();
+        //返回给支付，让其不在继续回调
+        return new Result(orderNum);
     }
 
     @Override

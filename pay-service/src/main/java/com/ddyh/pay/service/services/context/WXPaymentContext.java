@@ -18,6 +18,8 @@ public class WXPaymentContext extends PaymentContext{
     private String tradeType;
     /** 签名类型 */
     private String signType;
+    /** 商品描述 */
+    private String body;
 
     public Integer getTotalFee() {
         return totalFee;
@@ -65,5 +67,13 @@ public class WXPaymentContext extends PaymentContext{
 
     public void setSignType(String signType) {
         this.signType = signType;
+    }
+
+    public String getBody() {
+        return body;
+    }
+
+    public void setBody(String body) {
+        this.body = body;
     }
 }

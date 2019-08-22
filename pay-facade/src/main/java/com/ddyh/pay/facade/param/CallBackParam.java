@@ -12,8 +12,11 @@ public class CallBackParam implements Serializable {
     /** 支付/退款渠道*/
     private String payChannel;
 
-    /** 支付/退款通知结果渠道*/
-    private Map<String,String[]> resultMap;
+    /** 支付/退款通知结果渠道(支付宝回调参数)*/
+    private Map<String,String[]> aliParam;
+
+    /** 支付/退款通知结果渠道(微信回调参数,xml)*/
+    private String wxParam;
 
     public String getPayChannel() {
         return payChannel;
@@ -23,11 +26,19 @@ public class CallBackParam implements Serializable {
         this.payChannel = payChannel;
     }
 
-    public Map<String, String[]> getResultMap() {
-        return resultMap;
+    public Map<String, String[]> getAliParam() {
+        return aliParam;
     }
 
-    public void setResultMap(Map<String, String[]> resultMap) {
-        this.resultMap = resultMap;
+    public void setAliParam(Map<String, String[]> aliParam) {
+        this.aliParam = aliParam;
+    }
+
+    public String getWxParam() {
+        return wxParam;
+    }
+
+    public void setWxParam(String wxParam) {
+        this.wxParam = wxParam;
     }
 }

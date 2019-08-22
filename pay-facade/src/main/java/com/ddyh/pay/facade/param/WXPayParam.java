@@ -21,6 +21,9 @@ public class WXPayParam extends RequestParam implements Serializable {
     /** 微信openID(微信h5支付必填) */
     private String openId;
 
+    /** 商品描述 */
+    private String body;
+
     public Integer getTotalFee() {
         return totalFee;
     }
@@ -43,5 +46,13 @@ public class WXPayParam extends RequestParam implements Serializable {
 
     public void setOpenId(String openId) {
         this.openId = openId;
+    }
+
+    public String getBody() {
+        return body;
+    }
+
+    public void setBody(String body) {
+        this.body = body;
     }
 }

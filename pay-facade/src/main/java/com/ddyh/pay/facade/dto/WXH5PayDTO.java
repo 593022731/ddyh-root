@@ -3,30 +3,22 @@ package com.ddyh.pay.facade.dto;
 import java.io.Serializable;
 
 /**
- * 调用微信支付参数
+ * H5调用微信支付参数
  */
-public class WXPayDTO implements Serializable {
-
+public class WXH5PayDTO implements Serializable {
     /**
      * 应用ID
      */
     private String appId;
 
     /**
-     * 商户号
-     */
-    private String partnerId;
-
-    /**
-     * 预支付交易会话ID
-     * 当APP唤醒时，参数名不变prepayid=prepayid
-     * 当H5唤醒时，package=prepayId
+     * 订单详情扩展字符串 package=prepayId
+     * 因为package是关键字，不能作为变量，用prepayId代替
      */
     private String prepayId;
 
     /**
-     * 当APP唤醒时，package=signType
-     * 当H5唤醒时，参数名不变signType=signType
+     * 签名类型
      */
     private String signType;
 
@@ -43,18 +35,17 @@ public class WXPayDTO implements Serializable {
     /**
      * 签名
      */
-    private String sign;
+    private String paySign;
 
-    public WXPayDTO(){}
+    public WXH5PayDTO(){}
 
-    public WXPayDTO(String appId, String partnerId, String prepayId, String signType, String nonceStr, String timeStamp, String sign) {
+    public WXH5PayDTO(String appId, String prepayId, String signType, String nonceStr, String timeStamp, String paySign) {
         this.appId = appId;
-        this.partnerId = partnerId;
         this.prepayId = prepayId;
         this.signType = signType;
         this.nonceStr = nonceStr;
         this.timeStamp = timeStamp;
-        this.sign = sign;
+        this.paySign = paySign;
     }
 
     public String getAppId() {
@@ -63,14 +54,6 @@ public class WXPayDTO implements Serializable {
 
     public void setAppId(String appId) {
         this.appId = appId;
-    }
-
-    public String getPartnerId() {
-        return partnerId;
-    }
-
-    public void setPartnerId(String partnerId) {
-        this.partnerId = partnerId;
     }
 
     public String getPrepayId() {
@@ -105,11 +88,11 @@ public class WXPayDTO implements Serializable {
         this.timeStamp = timeStamp;
     }
 
-    public String getSign() {
-        return sign;
+    public String getPaySign() {
+        return paySign;
     }
 
-    public void setSign(String sign) {
-        this.sign = sign;
+    public void setPaySign(String paySign) {
+        this.paySign = paySign;
     }
 }
