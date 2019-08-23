@@ -17,12 +17,12 @@
     trade_success_time, remark
   </sql>
   <insert id="insert" parameterType="com.ddyh.pay.dao.model.TradeLog">
-    insert into t_trade_log (trade_no, out_trade_no,
+    insert into t_trade_log (trade_no,
       trade_amount, trade_channel, trade_type, 
-      trade_status, trade_success_time, remark)
-    values (#{tradeNo,jdbcType=VARCHAR}, #{outTradeNo,jdbcType=VARCHAR},
+      trade_status)
+    values (#{tradeNo,jdbcType=VARCHAR},
       #{tradeAmount,jdbcType=DECIMAL}, #{tradeChannel,jdbcType=VARCHAR}, #{tradeType,jdbcType=INTEGER},
-      #{tradeStatus,jdbcType=SMALLINT}, #{tradeSuccessTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}
+      #{tradeStatus,jdbcType=SMALLINT})
   </insert>
   <update id="update" parameterType="com.ddyh.pay.dao.model.TradeLog">
     update t_trade_log

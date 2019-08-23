@@ -1,6 +1,5 @@
 package com.ddyh.pay.service.services.core;
 
-import com.ddyh.commons.exception.BusinessException;
 import com.ddyh.commons.result.Result;
 import com.ddyh.pay.facade.param.CallBackParam;
 import com.ddyh.pay.facade.param.RequestParam;
@@ -17,12 +16,12 @@ public interface PayCoreService {
      * @param param
      * @return
      */
-    Result getRequest(RequestParam param) throws BusinessException;
+    Result getRequest(RequestParam param);
 
     /**
      * 回调处理
      * @param param
      * @return
      */
-    Result callback(CallBackParam param) throws BusinessException;
+    Result callback(CallBackParam param);
 }
