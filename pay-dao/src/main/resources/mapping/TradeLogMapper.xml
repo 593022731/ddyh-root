@@ -34,6 +34,13 @@
     where trade_no = #{tradeNo}
   </update>
 
+  <update id="updateTradeChannel" parameterType="com.ddyh.pay.dao.model.TradeLog">
+    update t_trade_log
+    set
+      trade_channel = #{tradeChannel,jdbcType=VARCHAR}
+    where trade_no = #{tradeNo}
+  </update>
+
   <select id="get" parameterType="java.lang.String" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
