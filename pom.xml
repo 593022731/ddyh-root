@@ -13,6 +13,8 @@
         <module>dd-commons</module>
         <module>pay-service</module>
         <module>pay-dao</module>
+        <module>order-facade</module>
+        <module>order-service</module>
     </modules>
 
     <properties>
