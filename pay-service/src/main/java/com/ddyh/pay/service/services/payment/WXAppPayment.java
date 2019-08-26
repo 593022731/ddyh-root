@@ -183,9 +183,9 @@ public class WXAppPayment extends BasePayCoreService {
 
                 if ("SUCCESS".equals(params.get("result_code"))) {
                     //更新交易日志表，交易成功
-                    String tradeSuccessTime = params.get("time_end").toString();
+                    String tradeSuccessTime = params.get("time_end").toString();//"time_end":"20190826154153"
                     try {
-                        tradeSuccessTime = DateFormatUtils.format(DateUtils.parseDate(tradeSuccessTime,"yyyy-MM-dd HH:mm:ss"),"yyyy-MM-dd HH:mm:ss");
+                        tradeSuccessTime = DateFormatUtils.format(DateUtils.parseDate(tradeSuccessTime,"yyyyMMddHHmmss"),"yyyy-MM-dd HH:mm:ss");
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
