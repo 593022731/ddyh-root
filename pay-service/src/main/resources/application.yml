@@ -18,5 +18,5 @@ pagehelper:
 logging:
     pattern:
         console: "%date %level [%thread] %logger{36} [%file : %line] %msg %X{key} %n"
-    level:
-        root: debug
+#    level:
+#        root: debug
