@@ -28,6 +28,13 @@ public class TradeLogService {
      * @param tradeType
      */
     public void save(String tradeNo, BigDecimal tradeAmount, PayChannelEnum payChannel, TradeTypeEnum tradeType) {
+        TradeLog tradeLog = get(tradeNo);
+        if(tradeLog != null){
+            //更换支付渠道，重新支付
+            tradeLog.setTradeChannel(payChannel.getCode());
+            tradeLogMapper.updateTradeChannel(tradeLog);
+            return;
+        }
         TradeLog item = new TradeLog();
         item.setTradeNo(tradeNo);
         item.setTradeAmount(tradeAmount);
