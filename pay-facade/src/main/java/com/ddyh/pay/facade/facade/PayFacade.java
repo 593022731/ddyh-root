@@ -15,8 +15,8 @@ public interface PayFacade {
 
     /**
      * 获取(支付/退款)订单信息
-     * @param param
-     * @return
+     * @param param 支付宝支付用AliPayParam，微信支付用WXPayParam
+     * @return 支付宝支付直接返回：String，APP微信支付返回对象：WXAppPayDTO，H5微信支付返回对象：WXH5PayDTO
      */
     Result getRequest(RequestParam param) throws BusinessException;
 
