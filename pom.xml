@@ -15,6 +15,24 @@
         <module>pay-dao</module>
         <module>order-facade</module>
         <module>order-service</module>
+        <module>user-facade</module>
+        <module>rebate-facade</module>
+        <module>order-dao</module>
+        <module>business-facade</module>
+        <module>business-service</module>
+        <module>business-api</module>
+        <module>business-admin</module>
+        <module>business-dao</module>
+        <module>user-service</module>
+        <module>user-dao</module>
+        <module>rebate-service</module>
+        <module>rebate-dao</module>
+        <module>rebate-api</module>
+        <module>product-facade</module>
+        <module>product-service</module>
+        <module>product-dao</module>
+        <module>product-api</module>
+        <module>product-admin</module>
     </modules>
 
     <properties>

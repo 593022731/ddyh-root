@@ -17,6 +17,25 @@
             <artifactId>order-facade</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>com.ddyh</groupId>
+            <artifactId>order-dao</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+        <!--商品系统-->
+        <dependency>
+            <groupId>com.product</groupId>
+            <artifactId>product-facade</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+
+        <!--用户系统-->
+        <dependency>
+            <groupId>com.ddyh</groupId>
+            <artifactId>user-facade</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
 
         <!-- apollo 配置中心 -->
         <dependency>
@@ -29,6 +48,12 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.58</version>
         </dependency>
 
         <!-- 用下面的alibaba dubbo starter，必须引入此spring-boot-starter-web，否则启动不了，这是一个坑，不知道少了哪个class，后续换成zk3.5.5版本，用apache dubbo starter -->

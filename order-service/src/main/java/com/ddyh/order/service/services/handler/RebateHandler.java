@@ -18,7 +18,7 @@ public class RebateHandler implements OrderHandler {
 
     @Override
     public boolean handle(OrderContext context) {
-        //TODO 返利处理
+        //TODO 直接调用返利系统返利方法，返利系统进行策略模式自行处理各种订单类型的返利处理
         return true;
     }
 }
