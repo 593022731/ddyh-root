@@ -4,6 +4,7 @@ package com.ddyh.pay.service.services.payment;
 import com.alibaba.fastjson.JSON;
 import com.ddyh.commons.exception.BusinessException;
 import com.ddyh.commons.result.Result;
+import com.ddyh.commons.result.ResultCode;
 import com.ddyh.commons.utils.CommonUtil;
 import com.ddyh.commons.utils.HttpClientUtil;
 import com.ddyh.commons.utils.ResultUtil;
@@ -178,7 +179,7 @@ public class WXAppPayment extends BasePayCoreService {
                 //已回调，直接return
                 TradeLog tradeLog = tradeLogService.get(orderNum);
                 if(!tradeLog.getTradeStatus().equals(TradeStatusEnum.COMMIT.getCode())){
-                    throw new BusinessException("重复提交");
+                    throw new BusinessException(ResultCode.REPEAT_COMMIT);
                 }
 
                 if ("SUCCESS".equals(params.get("result_code"))) {

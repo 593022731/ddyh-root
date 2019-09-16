@@ -11,6 +11,7 @@ import com.alipay.api.request.AlipayTradeAppPayRequest;
 import com.alipay.api.response.AlipayTradeAppPayResponse;
 import com.ddyh.commons.exception.BusinessException;
 import com.ddyh.commons.result.Result;
+import com.ddyh.commons.result.ResultCode;
 import com.ddyh.commons.utils.ResultUtil;
 import com.ddyh.pay.dao.model.TradeLog;
 import com.ddyh.pay.facade.constant.PayChannelEnum;
@@ -155,7 +156,7 @@ public class AliAppPayment extends BasePayCoreService {
         //已回调，直接return
         TradeLog tradeLog = tradeLogService.get(orderNum);
         if(!tradeLog.getTradeStatus().equals(TradeStatusEnum.COMMIT.getCode())){
-            throw new BusinessException("重复提交");
+            throw new BusinessException(ResultCode.REPEAT_COMMIT);
         }
 
         //TODO 直接调用订单系统，会处理订单已完成，直接return，根据订单类型自动处理不同类型的订单回调
