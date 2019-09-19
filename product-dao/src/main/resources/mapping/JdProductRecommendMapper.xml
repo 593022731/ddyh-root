@@ -1,0 +1,361 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ddyh.product.dao.mapper.JdProductRecommendMapper">
+    <resultMap id="BaseResultMap" type="com.ddyh.product.dao.model.JdProductRecommend">
+        <id column="sku" jdbcType="BIGINT" property="sku"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="brand_name" jdbcType="VARCHAR" property="brandName"/>
+        <result column="jd_price" jdbcType="DOUBLE" property="jdPrice"/>
+        <result column="price" jdbcType="DOUBLE" property="price"/>
+        <result column="state" jdbcType="INTEGER" property="state"/>
+        <result column="jd_state" jdbcType="INTEGER" property="jdState"/>
+        <result column="cat0" jdbcType="INTEGER" property="cat0"/>
+        <result column="cat1" jdbcType="INTEGER" property="cat1"/>
+        <result column="cat2" jdbcType="INTEGER" property="cat2"/>
+        <result column="profit" jdbcType="DOUBLE" property="profit"/>
+        <result column="img_path" jdbcType="VARCHAR" property="imgPath"/>
+        <result column="member_price" jdbcType="DOUBLE" property="memberPrice"/>
+        <result column="purchase_price" jdbcType="DOUBLE" property="purchasePrice"/>
+        <result column="recommend_type" jdbcType="INTEGER" property="recommendType"/>
+        <result column="pointed_cargo" jdbcType="INTEGER" property="pointedCargo"/>
+        <result column="experience_card_invite" jdbcType="INTEGER" property="experienceCardInvite"/>
+        <result column="is_height_discount" jdbcType="INTEGER" property="isHeightDiscount"/>
+        <result column="custom_sort" jdbcType="INTEGER" property="customSort"/>
+        <result column="discount_rate" jdbcType="DOUBLE" property="discountRate"/>
+        <result column="mem_discount_rate" jdbcType="DOUBLE" property="memDiscountRate"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="request_time" jdbcType="TIMESTAMP" property="requestTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    sku, name, brand_name, jd_price, price, state, jd_state,cat0, cat1, cat2, profit,
+    img_path, member_price, purchase_price, recommend_type, pointed_cargo, experience_card_invite, is_height_discount,
+    custom_sort, discount_rate, mem_discount_rate, update_time,request_time
+  </sql>
+
+    <insert id="replaceInfoProduct">
+        replace into jd_product_recommend (sku, name, brand_name,
+        jd_price, price, state,
+        jd_state, cat0, cat1,
+        cat2, request_time, profit,
+        img_path, member_price, purchase_price,
+        discount_rate, mem_discount_rate,
+        recommend_type,pointed_cargo,is_height_discount,custom_sort
+        )
+        VALUES
+        <foreach collection="list" item="it" separator=",">
+            (
+            #{it.sku},#{it.name},#{it.brandName},#{it.jdPrice},#{it.price},#{it.state},#{it.jdState},#{it.cat0},#{it.cat1},#{it.cat2},#{it.requestTime},#{it.profit},
+            #{it.imgPath},#{it.memberPrice},#{it.purchasePrice},#{it.discountRate},#{it.memDiscountRate}
+            ,#{it.recommendType},#{it.pointedCargo},#{it.isHeightDiscount},#{it.customSort}
+            )
+        </foreach>
+    </insert>
+
+    <insert id="insert" parameterType="com.ddyh.product.dao.model.JdProductRecommend">
+        insert into jd_product_recommend
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="sku != null">
+                sku,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="brandName != null">
+                brand_name,
+            </if>
+            <if test="jdPrice != null">
+                jd_price,
+            </if>
+            <if test="price != null">
+                price,
+            </if>
+            <if test="state != null">
+                state,
+            </if>
+            <if test="jdState != null">
+                jd_state,
+            </if>
+            <if test="cat0 != null">
+                cat0,
+            </if>
+            <if test="cat1 != null">
+                cat1,
+            </if>
+            <if test="cat2 != null">
+                cat2,
+            </if>
+            <if test="requestTime != null">
+                request_time,
+            </if>
+            <if test="profit != null">
+                profit,
+            </if>
+            <if test="imgPath != null">
+                img_path,
+            </if>
+            <if test="memberPrice != null">
+                member_price,
+            </if>
+            <if test="purchasePrice != null">
+                purchase_price,
+            </if>
+            <if test="recommendType != null">
+                recommend_type,
+            </if>
+            <if test="pointedCargo != null">
+                pointed_cargo,
+            </if>
+            <if test="experienceCardInvite != null">
+                experience_card_invite,
+            </if>
+            <if test="isHeightDiscount != null">
+                is_height_discount,
+            </if>
+            <if test="customSort != null">
+                custom_sort,
+            </if>
+            <if test="discountRate != null">
+                discount_rate,
+            </if>
+            <if test="memDiscountRate != null">
+                mem_discount_rate,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="sku != null">
+                #{sku,jdbcType=BIGINT},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="brandName != null">
+                #{brandName,jdbcType=VARCHAR},
+            </if>
+            <if test="jdPrice != null">
+                #{jdPrice,jdbcType=DOUBLE},
+            </if>
+            <if test="price != null">
+                #{price,jdbcType=DOUBLE},
+            </if>
+            <if test="state != null">
+                #{state,jdbcType=INTEGER},
+            </if>
+            <if test="jdState != null">
+                #{jdState,jdbcType=INTEGER},
+            </if>
+            <if test="cat0 != null">
+                #{cat0,jdbcType=INTEGER},
+            </if>
+            <if test="cat1 != null">
+                #{cat1,jdbcType=INTEGER},
+            </if>
+            <if test="cat2 != null">
+                #{cat2,jdbcType=INTEGER},
+            </if>
+            <if test="requestTime != null">
+                #{requestTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="profit != null">
+                #{profit,jdbcType=DOUBLE},
+            </if>
+            <if test="imgPath != null">
+                #{imgPath,jdbcType=VARCHAR},
+            </if>
+            <if test="memberPrice != null">
+                #{memberPrice,jdbcType=DOUBLE},
+            </if>
+            <if test="purchasePrice != null">
+                #{purchasePrice,jdbcType=DOUBLE},
+            </if>
+            <if test="recommendType != null">
+                #{recommendType,jdbcType=INTEGER},
+            </if>
+            <if test="pointedCargo != null">
+                #{pointedCargo,jdbcType=INTEGER},
+            </if>
+            <if test="experienceCardInvite != null">
+                #{experienceCardInvite,jdbcType=INTEGER},
+            </if>
+            <if test="isHeightDiscount != null">
+                #{isHeightDiscount,jdbcType=INTEGER},
+            </if>
+            <if test="customSort != null">
+                #{customSort,jdbcType=INTEGER},
+            </if>
+            <if test="discountRate != null">
+                #{discountRate,jdbcType=DOUBLE},
+            </if>
+            <if test="memDiscountRate != null">
+                #{memDiscountRate,jdbcType=DOUBLE},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="update" parameterType="com.ddyh.product.dao.model.JdProductRecommend">
+    update jd_product_recommend
+    set name = #{name,jdbcType=VARCHAR},
+      brand_name = #{brandName,jdbcType=VARCHAR},
+      jd_price = #{jdPrice,jdbcType=DOUBLE},
+      price = #{price,jdbcType=DOUBLE},
+      state = #{state,jdbcType=INTEGER},
+      jd_state = #{jdState,jdbcType=INTEGER},
+      cat0 = #{cat0,jdbcType=INTEGER},
+      cat1 = #{cat1,jdbcType=INTEGER},
+      cat2 = #{cat2,jdbcType=INTEGER},
+      profit = #{profit,jdbcType=DOUBLE},
+      img_path = #{imgPath,jdbcType=VARCHAR},
+      member_price = #{memberPrice,jdbcType=DOUBLE},
+      purchase_price = #{purchasePrice,jdbcType=DOUBLE},
+      recommend_type = #{recommendType,jdbcType=INTEGER},
+      pointed_cargo = #{pointedCargo,jdbcType=INTEGER},
+      experience_card_invite = #{experienceCardInvite,jdbcType=INTEGER},
+      is_height_discount = #{isHeightDiscount,jdbcType=INTEGER},
+      custom_sort = #{customSort,jdbcType=INTEGER},
+      discount_rate = #{discountRate,jdbcType=DOUBLE},
+      mem_discount_rate = #{memDiscountRate,jdbcType=DOUBLE}
+    where sku = #{sku,jdbcType=BIGINT}
+  </update>
+
+    <update id="updateLabel" parameterType="com.product.param.LabelUpdateParam">
+        update jd_product_recommend
+        <set>
+            <if test="recommendType != null">
+                recommend_type = #{recommendType,jdbcType=INTEGER},
+            </if>
+            <if test="pointedCargo != null">
+                pointed_cargo = #{pointedCargo,jdbcType=INTEGER},
+            </if>
+            <if test="experienceCardInvite != null">
+                experience_card_invite = #{experienceCardInvite,jdbcType=INTEGER},
+            </if>
+        </set>
+        where sku = #{sku,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateState" parameterType="com.product.param.StateUpdateParam">
+        update jd_product_recommend
+        <set>
+            <if test="state != null">
+                state = #{state,jdbcType=INTEGER},
+            </if>
+        </set>
+        where sku = #{sku,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateCustomSort" parameterType="com.product.param.CustomSortUpdateParam">
+        update jd_product_recommend
+        <set>
+            <if test="sortVal != null">
+                custom_sort = #{sortVal,jdbcType=INTEGER},
+            </if>
+        </set>
+        where sku = #{sku,jdbcType=BIGINT}
+    </update>
+
+    <select id="getList" parameterType="com.product.param.ProductParam" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from jd_product_recommend
+        <where>
+            <if test="sku != null">
+                and sku = #{sku}
+            </if>
+
+            <if test="state != null">
+                and state = #{state}
+            </if>
+
+            <if test="jdState != null">
+                and jd_state = #{jdState}
+            </if>
+
+            <if test="cat0 != null">
+                and cat0 = #{cat0}
+            </if>
+
+            <if test="cat1 != null">
+                and cat1 = #{cat1}
+            </if>
+
+            <if test="cat2 != null">
+                and cat2 = #{cat2}
+            </if>
+
+            <if test="name != null and name != ''">
+                and name like CONCAT('%',#{name},'%')
+            </if>
+
+            <if test="brandName != null and brandName != ''">
+                and brand_name like CONCAT('%',#{brandName},'%')
+            </if>
+
+            <if test="keyword != null and keyword != ''">
+                and ( name like CONCAT('%',#{keyword},'%') or brand_name like CONCAT('%',#{keyword},'%') )
+            </if>
+
+            <if test="skus != null">
+                and sku in
+                <foreach collection="skus" index="index" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="cat0s != null">
+                and cat0 in
+                <foreach collection="cat0s" index="index" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="cat1s != null">
+                and cat1 in
+                <foreach collection="cat1s" index="index" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="cat2s != null">
+                and cat2 in
+                <foreach collection="cat2s" index="index" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="profitRate != null">
+                and (profit/jd_price) &gt;= #{profitRate}
+            </if>
+            <if test="discountRateBegin != null">
+                and discount_rate &gt;= #{discountRateBegin}
+            </if>
+
+            <if test="discountRateEnd != null">
+                and discount_rate &lt;= #{discountRateEnd}
+            </if>
+
+            <if test="recommendType != null">
+                and recommend_type = #{recommendType}
+            </if>
+
+            <if test="pointedCargo != null">
+                and pointed_cargo = #{pointedCargo}
+            </if>
+
+            <if test="experienceCardInvite != null">
+                and experience_card_invite = #{experienceCardInvite}
+            </if>
+
+            <if test="memberPriceBegin != null">
+                and member_price &gt;= #{memberPriceBegin}
+            </if>
+
+            <if test="memberPriceEnd != null">
+                and member_price &lt;= #{memberPriceEnd}
+            </if>
+            <if test="customSort != null">
+                and custom_sort &gt;= #{customSort}
+            </if>
+        </where>
+    </select>
+
+    <select id="get" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from jd_product_recommend where sku = #{sku}
+    </select>
+</mapper>

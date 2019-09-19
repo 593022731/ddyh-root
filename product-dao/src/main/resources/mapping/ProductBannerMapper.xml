@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ddyh.product.dao.mapper.ProductBannerMapper">
+    <resultMap id="BaseResultMap" type="com.ddyh.product.dao.model.ProductBanner">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="sku" jdbcType="BIGINT" property="sku"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="target_type" jdbcType="INTEGER" property="targetType"/>
+        <result column="target_path" jdbcType="VARCHAR" property="targetPath"/>
+        <result column="img_path" jdbcType="VARCHAR" property="imgPath"/>
+        <result column="sort" jdbcType="INTEGER" property="sort"/>
+        <result column="state" jdbcType="INTEGER" property="state"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, sku, name, target_type, target_path, img_path, sort, state, create_date, update_date
+  </sql>
+    <select id="getList" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from jd_product_banner
+        where state = 1 order by sort asc
+    </select>
+
+</mapper>
