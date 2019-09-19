@@ -11,4 +11,11 @@
 
     <artifactId>product-facade</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.ddyh</groupId>
+            <artifactId>dd-commons</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
 </project>

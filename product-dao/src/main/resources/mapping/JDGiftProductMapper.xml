@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ddyh.product.dao.mapper.JDGiftProductMapper">
+    <resultMap id="BaseResultMap" type="com.ddyh.product.dao.model.JDGiftProduct">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="channel_id" jdbcType="VARCHAR" property="channelId"/>
+        <result column="skus" jdbcType="VARCHAR" property="skus"/>
+        <result column="gift_title" jdbcType="VARCHAR" property="giftTitle"/>
+        <result column="gift_price" jdbcType="DOUBLE" property="giftPrice"/>
+        <result column="gift_imgpath" jdbcType="VARCHAR" property="giftImgpath"/>
+        <result column="original_price" jdbcType="DOUBLE" property="originalPrice"/>
+        <result column="selling_point" jdbcType="VARCHAR" property="sellingPoint"/>
+        <result column="pur_limit_id" jdbcType="VARCHAR" property="purLimitId"/>
+        <result column="pur_limit_city" jdbcType="VARCHAR" property="purLimitCity"/>
+        <result column="gift_type" jdbcType="INTEGER" property="giftType"/>
+        <result column="state" jdbcType="INTEGER" property="state"/>
+        <result column="is_pub" jdbcType="INTEGER" property="isPub"/>
+        <result column="is_pri" jdbcType="INTEGER" property="isPri"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, channel_id, skus, gift_title, gift_price, gift_imgpath, original_price, selling_point,
+    pur_limit_id, pur_limit_city, gift_type, state, is_pub, is_pri, create_time, update_time
+  </sql>
+    <select id="get" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from jd_gift_product
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <insert id="insert" parameterType="com.ddyh.product.dao.model.JDGiftProduct" useGeneratedKeys="true" keyProperty="id">
+    insert into jd_gift_product (channel_id, skus,
+      gift_title, gift_price, gift_imgpath,
+      original_price, selling_point, pur_limit_id,
+      pur_limit_city, gift_type, state,
+      is_pub, is_pri)
+    values (#{channelId,jdbcType=VARCHAR}, #{skus,jdbcType=VARCHAR},
+      #{giftTitle,jdbcType=VARCHAR}, #{giftPrice,jdbcType=DOUBLE}, #{giftImgpath,jdbcType=VARCHAR},
+      #{originalPrice,jdbcType=DOUBLE}, #{sellingPoint,jdbcType=VARCHAR}, #{purLimitId,jdbcType=VARCHAR},
+      #{purLimitCity,jdbcType=VARCHAR}, #{giftType,jdbcType=INTEGER}, #{state,jdbcType=INTEGER},
+      #{isPub,jdbcType=INTEGER}, #{isPri,jdbcType=INTEGER})
+  </insert>
+
+    <update id="update" parameterType="com.ddyh.product.dao.model.JDGiftProduct">
+        update jd_gift_product
+        <set>
+            <if test="channelId != null">
+                channel_id = #{channelId,jdbcType=VARCHAR},
+            </if>
+            <if test="skus != null">
+                skus = #{skus,jdbcType=VARCHAR},
+            </if>
+            <if test="giftTitle != null">
+                gift_title = #{giftTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="giftPrice != null">
+                gift_price = #{giftPrice,jdbcType=DOUBLE},
+            </if>
+            <if test="giftImgpath != null">
+                gift_imgpath = #{giftImgpath,jdbcType=VARCHAR},
+            </if>
+            <if test="originalPrice != null">
+                original_price = #{originalPrice,jdbcType=DOUBLE},
+            </if>
+            <if test="sellingPoint != null">
+                selling_point = #{sellingPoint,jdbcType=VARCHAR},
+            </if>
+            <if test="purLimitId != null">
+                pur_limit_id = #{purLimitId,jdbcType=VARCHAR},
+            </if>
+            <if test="purLimitCity != null">
+                pur_limit_city = #{purLimitCity,jdbcType=VARCHAR},
+            </if>
+            <if test="giftType != null">
+                gift_type = #{giftType,jdbcType=INTEGER},
+            </if>
+            <if test="state != null">
+                state = #{state,jdbcType=INTEGER},
+            </if>
+            <if test="isPub != null">
+                is_pub = #{isPub,jdbcType=INTEGER},
+            </if>
+            <if test="isPri != null">
+                is_pri = #{isPri,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <update id="updateState">
+        update jd_gift_product set state = #{state} where id = #{id}
+    </update>
+
+    <update id="updateSku">
+        update jd_gift_product set skus = #{id} where id = #{id}
+    </update>
+
+    <select id="getList" resultMap="BaseResultMap" parameterType="com.product.param.JDGiftProductQueryParam">
+        select
+        <include refid="Base_Column_List"/>
+        from jd_gift_product where 1=1
+        <if test="channelId != null">
+            and ( (channel_id
+            LIKE concat('%,', #{channelId}) or channel_id LIKE concat(#{channelId}, ',%') or channel_id like
+            concat('%,', #{channelId}, ',%')
+            or channel_id = #{channelId})
+            AND is_pri = 1)
+        </if>
+        <if test="isPub != null">
+            and is_pub = #{isPub}
+        </if>
+        <if test="state != null">
+            and state = #{state}
+        </if>
+    </select>
+</mapper>

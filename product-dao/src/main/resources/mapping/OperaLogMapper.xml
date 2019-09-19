@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ddyh.product.dao.mapper.OperaLogMapper">
+    <resultMap id="BaseResultMap" type="com.ddyh.product.dao.model.OperaLog">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="type" property="type" jdbcType="VARCHAR"/>
+        <result column="description" property="description" jdbcType="VARCHAR"/>
+        <result column="opera_user" property="operaUser" jdbcType="VARCHAR"/>
+        <result column="method" property="method" jdbcType="VARCHAR"/>
+        <result column="log_type" property="logType" jdbcType="INTEGER"/>
+        <result column="params" property="params" jdbcType="VARCHAR"/>
+        <result column="ip_addr" property="ipAddr" jdbcType="VARCHAR"/>
+        <result column="error_code" property="errorCode" jdbcType="VARCHAR"/>
+        <result column="error_msg" property="errorMsg" jdbcType="VARCHAR"/>
+        <result column="create_at" property="createAt" jdbcType="TIMESTAMP"/>
+        <result column="update_at" property="updateAt" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, type, description, opera_user, method, log_type, params, ip_addr, error_code, 
+    error_msg, create_at, update_at
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from opera_log
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <insert id="insertSelective" parameterType="com.ddyh.product.dao.model.OperaLog">
+        insert into opera_log
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="description != null">
+                description,
+            </if>
+            <if test="operaUser != null">
+                opera_user,
+            </if>
+            <if test="method != null">
+                method,
+            </if>
+            <if test="logType != null">
+                log_type,
+            </if>
+            <if test="params != null">
+                params,
+            </if>
+            <if test="ipAddr != null">
+                ip_addr,
+            </if>
+            <if test="errorCode != null">
+                error_code,
+            </if>
+            <if test="errorMsg != null">
+                error_msg,
+            </if>
+            <if test="createAt != null">
+                create_at,
+            </if>
+            <if test="updateAt != null">
+                update_at,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="description != null">
+                #{description,jdbcType=VARCHAR},
+            </if>
+            <if test="operaUser != null">
+                #{operaUser,jdbcType=VARCHAR},
+            </if>
+            <if test="method != null">
+                #{method,jdbcType=VARCHAR},
+            </if>
+            <if test="logType != null">
+                #{logType,jdbcType=INTEGER},
+            </if>
+            <if test="params != null">
+                #{params,jdbcType=VARCHAR},
+            </if>
+            <if test="ipAddr != null">
+                #{ipAddr,jdbcType=VARCHAR},
+            </if>
+            <if test="errorCode != null">
+                #{errorCode,jdbcType=VARCHAR},
+            </if>
+            <if test="errorMsg != null">
+                #{errorMsg,jdbcType=VARCHAR},
+            </if>
+            <if test="createAt != null">
+                #{createAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateAt != null">
+                #{updateAt,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+</mapper>

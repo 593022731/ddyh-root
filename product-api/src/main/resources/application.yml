@@ -1,0 +1,12 @@
+app:
+  id: dd-product
+apollo:
+  bootstrap:
+    enabled: true
+    namespaces: api_dubbo,application
+
+logging:
+  pattern:
+    console: "%date %level [%thread] %logger{36} [%file : %line] %msg %X{key} %n"
+#    level:
+#        root: debug
