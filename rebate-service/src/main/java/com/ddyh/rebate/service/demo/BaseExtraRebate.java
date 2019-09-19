@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 返利核心类，copy部分代码供参考
+ * 额外返利核心类，copy部分代码供参考
  */
 @Slf4j
 public abstract class BaseExtraRebate implements ExtraRebate {
