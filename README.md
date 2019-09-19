@@ -192,7 +192,7 @@ CREATE TABLE `t_total_rebate` (
 
 ```
 
-现在用户表
+现有的用户表
 ```
 
 CREATE TABLE `t_user` (
@@ -270,4 +270,4 @@ CREATE TABLE `t_member_team` (
 
 ```
 
-目前除了订单表重新设计，其他都需要重构
+目前除了订单表重构过，其他都没有设计
