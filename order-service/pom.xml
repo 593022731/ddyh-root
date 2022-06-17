@@ -53,7 +53,7 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
-            <version>1.2.58</version>
+            <version>1.2.83</version>
         </dependency>
 
         <!-- 用下面的alibaba dubbo starter，必须引入此spring-boot-starter-web，否则启动不了，这是一个坑，不知道少了哪个class，后续换成zk3.5.5版本，用apache dubbo starter -->
